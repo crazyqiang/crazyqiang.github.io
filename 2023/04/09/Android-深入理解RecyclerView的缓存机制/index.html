@@ -1,12 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang='zh-CN'>
+
 <head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
   <meta charset="utf-8">
   
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
   
   <title>小马快跑的博客</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="@[toc] RecyclerView在项目中的使用已经很普遍了，可以说是项目中最高频使用的一个控件了。除了布局灵活性、丰富的动画，RecyclerView还有优秀的缓存机制，本文尝试通过源码深入了解一下RecyclerView中的缓存机制。 写在前面RecyclerView 是通过内部类 Recycler 管理的缓存，那么 Recycler 中缓存的是什么？我们知道 RecyclerView 在">
+
+  
+    <meta name="description" content="@[toc] RecyclerView在项目中的使用已经很普遍了，可以说是项目中最高频使用的一个控件了。除了布局灵活性、丰富的动画，RecyclerView还有优秀的缓存机制，本文尝试通过源码深入了解一下RecyclerView中的缓存机制。 写在前面RecyclerView 是通过内部类 Recycler 管理的缓存，那么 Recycler 中缓存的是什么？我们知道 RecyclerView 在">
 <meta property="og:type" content="article">
 <meta property="og:title" content="小马快跑的博客">
 <meta property="og:url" content="https://github.com/crazyqiang/crazyqiang.github.io/2023/04/09/Android-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3RecyclerView%E7%9A%84%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6/index.html">
@@ -21,78 +38,72 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy81ODcxNjMtNjlhNmYwZTIzMzQwNjc1Ni5wbmc?x-oss-process=image/format,png">
   
-    <link rel="alternate" href="/atom.xml" title="小马快跑的博客" type="application/atom+xml">
   
   
-    <link rel="shortcut icon" href="/favicon.png">
   
-  
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
+  <!-- feed -->
   
-  
-<link rel="stylesheet" href="/css/style.css">
 
   
     
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+<link rel="stylesheet" href="/css/main.css">
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+
+  
+
+  
+
+  
+
+
+  
+</head>
 
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">小马快跑的博客</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">Github:https://github.com/crazyqiang/</a>
-        </h2>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://github.com/crazyqiang/crazyqiang.github.io"></form>
-      </div>
-    </div>
-  </div>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+  
+
+<header class="header"><div class="logo-wrap"><a class="title" href="/"><div class="main" ff="title">小马快跑的博客</div><div class="sub cap">Github:https://github.com/crazyqiang/</div></a></div>
+
+<nav class="menu dis-select"></nav>
 </header>
 
-      <div class="outer">
-        <section id="main"><article id="post-Android-深入理解RecyclerView的缓存机制" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/04/09/Android-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3RecyclerView%E7%9A%84%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6/" class="article-date">
-  <time class="dt-published" datetime="2023-04-08T17:05:49.543Z" itemprop="datePublished">2023-04-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="e-content article-entry" itemprop="articleBody">
+
+<div class="widgets">
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/blog/" placeholder="文章搜索"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
+
+
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E7%BA%A7%E7%BC%93%E5%AD%98"><span class="toc-text">四级缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ViewCacheExtension"><span class="toc-text">ViewCacheExtension</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RecyclerView-amp-ListView%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6%E5%AF%B9%E6%AF%94"><span class="toc-text">RecyclerView &amp; ListView缓存机制对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol></div></div></widget>
+
+
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
       
-        <p>@[toc]</p>
+
+      
+
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div><div id="post-meta">发布于&nbsp;<time datetime="2023-04-08T17:05:49.543Z">2023-04-09</time></div></div>
+
+<article class='md-text content post'>
+
+<p>@[toc]</p>
 <p><code>RecyclerView</code>在项目中的使用已经很普遍了，可以说是项目中最高频使用的一个控件了。除了布局灵活性、丰富的动画，<code>RecyclerView</code>还有优秀的缓存机制，本文尝试通过源码深入了解一下<code>RecyclerView</code>中的缓存机制。</p>
 <h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p><code>RecyclerView</code> 是通过内部类 <code>Recycler</code> 管理的缓存，那么 <code>Recycler</code> 中缓存的是什么？我们知道 <code>RecyclerView</code> 在存在大量数据时依然可以滑动的如丝滑般顺畅，而 <code>RecyclerView</code> 本身是一个 <code>ViewGroup</code> ，那么滑动时避免不了添加或移除子View(子View通过<code>RecyclerView#Adapter</code>中的<code>onCreateViewHolder</code>创建)，如果每次使用子View都要去重新创建，肯定会影响滑动的流 畅性，所以 <code>RecyclerView</code> 通过 <code>Recycler</code> 来缓存的是 <code>ViewHolder</code> (内部包含子View)，这样在滑动时可以复用<code>子View</code>，某些条件下还可以复用<code>子View</code>绑定的数据。所以<strong>本质上缓存是为了减少重复绘制View和绑定数据的时间，从而提高了滑动时的性能</strong>。</p>
 <h3 id="四级缓存"><a href="#四级缓存" class="headerlink" title="四级缓存"></a>四级缓存</h3><p><code>Recycler</code>缓存<code>ViewHolder</code>对象有4个等级，优先级从高到底依次为：</p>
@@ -154,7 +165,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">//根据传入的position获取ViewHolder</span><br><span class="line">ViewHolder tryGetViewHolderForPositionByDeadline(int position,</span><br><span class="line">        boolean dryRun, long deadlineNs) &#123;</span><br><span class="line">    ---------省略----------</span><br><span class="line">    boolean fromScrapOrHiddenOrCache = false;</span><br><span class="line">    ViewHolder holder = null;</span><br><span class="line">    //预布局 属于特殊情况 从mChangedScrap中获取ViewHolder</span><br><span class="line">    if (mState.isPreLayout()) &#123;</span><br><span class="line">        holder = getChangedScrapViewForPosition(position);</span><br><span class="line">        fromScrapOrHiddenOrCache = holder != null;</span><br><span class="line">    &#125;</span><br><span class="line">    if (holder == null) &#123;</span><br><span class="line">        //1、尝试从mAttachedScrap中获取ViewHolder,此时获取的是屏幕中可见范围中的ViewHolder</span><br><span class="line">        //2、mAttachedScrap缓存中没有的话，继续从mCachedViews尝试获取ViewHolder</span><br><span class="line">        holder = getScrapOrHiddenOrCachedHolderForPosition(position, dryRun);</span><br><span class="line">     ----------省略----------</span><br><span class="line">    &#125;</span><br><span class="line">    if (holder == null) &#123;</span><br><span class="line">        final int offsetPosition = mAdapterHelper.findPositionOffset(position);</span><br><span class="line">        ---------省略----------</span><br><span class="line">        final int type = mAdapter.getItemViewType(offsetPosition);</span><br><span class="line">        //如果Adapter中声明了Id，尝试从id中获取，这里不属于缓存</span><br><span class="line">        if (mAdapter.hasStableIds()) &#123;</span><br><span class="line">            holder = getScrapOrCachedViewForId(mAdapter.getItemId(offsetPosition),</span><br><span class="line">                    type, dryRun);</span><br><span class="line">        &#125;</span><br><span class="line">        if (holder == null &amp;&amp; mViewCacheExtension != null) &#123;</span><br><span class="line">            3、从自定义缓存mViewCacheExtension中尝试获取ViewHolder，该缓存需要开发者实现</span><br><span class="line">            final View view = mViewCacheExtension</span><br><span class="line">                    .getViewForPositionAndType(this, position, type);</span><br><span class="line">            if (view != null) &#123;</span><br><span class="line">                holder = getChildViewHolder(view);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if (holder == null) &#123; // fallback to pool</span><br><span class="line">            //4、从缓存池mRecyclerPool中尝试获取ViewHolder</span><br><span class="line">            holder = getRecycledViewPool().getRecycledView(type);</span><br><span class="line">            if (holder != null) &#123;</span><br><span class="line">                //如果获取成功，会重置ViewHolder状态，所以需要重新执行Adapter#onBindViewHolder绑定数据</span><br><span class="line">                holder.resetInternal();</span><br><span class="line">                if (FORCE_INVALIDATE_DISPLAY_LIST) &#123;</span><br><span class="line">                    invalidateDisplayListInt(holder);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if (holder == null) &#123;</span><br><span class="line">            ---------省略----------</span><br><span class="line">          //5、若以上缓存中都没有找到对应的ViewHolder，最终会调用Adapter中的onCreateViewHolder创建一个</span><br><span class="line">            holder = mAdapter.createViewHolder(RecyclerView.this, type);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    boolean bound = false;</span><br><span class="line">    if (mState.isPreLayout() &amp;&amp; holder.isBound()) &#123;</span><br><span class="line">        holder.mPreLayoutPosition = position;</span><br><span class="line">    &#125; else if (!holder.isBound() || holder.needsUpdate() || holder.isInvalid()) &#123;</span><br><span class="line">        final int offsetPosition = mAdapterHelper.findPositionOffset(position);</span><br><span class="line">        //6、如果需要绑定数据，会调用Adapter#onBindViewHolder来绑定数据</span><br><span class="line">        bound = tryBindViewHolderByDeadline(holder, offsetPosition, position, deadlineNs);</span><br><span class="line">    &#125;</span><br><span class="line">    ----------省略----------</span><br><span class="line">    return holder;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>上述逻辑用流程图表示：</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy81ODcxNjMtNjlhNmYwZTIzMzQwNjc1Ni5wbmc?x-oss-process=image/format,png" alt="image.png"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy81ODcxNjMtNjlhNmYwZTIzMzQwNjc1Ni5wbmc?x-oss-process=image/format,png" alt="image.png"></p>
 <p>总结一下上述流程：<strong>通过mAttachedScrap、mCachedViews及mViewCacheExtension获取的ViewHolder不需要重新创建布局及绑定数据；通过缓存池mRecyclerPool获取的ViewHolder不需要重新创建布局，但是需要重新绑定数据；如果上述缓存中都没有获取到目标ViewHolder，那么就会回调Adapter#onCreateViewHolder创建布局，以及回调Adapter#onBindViewHolder来绑定数据。</strong></p>
 <h4 id="ViewCacheExtension"><a href="#ViewCacheExtension" class="headerlink" title="ViewCacheExtension"></a>ViewCacheExtension</h4><p>我们已经知道ViewCacheExtension属于第三级缓存，需要开发者自行实现，那么ViewCacheExtension在什么场景下使用？又是如何实现的呢？</p>
 <p>首先我们要明确一点，那就是<code>Recycler</code>本身已经设置了好几级缓存了，为什么还要留个接口让开发者去自行实现缓存呢？关于这一点，谈一谈我的理解：来看看<code>Recycler</code>中的其他缓存，其中<code>mAttachedScrap</code>用来处理可见屏幕的缓存；<code>mCachedViews</code>里存储的数据虽然是根据<code>position</code>来缓存，但是里面的数据随时可能会被替换的；再来看<code>mRecyclerPool</code>，<code>mRecyclerPool</code>里按<code>viewType</code>去存储<code>ArrayList&lt; ViewHolder&gt;</code>，所以<code>mRecyclerPool</code>并不能按<code>position</code>去存储<code>ViewHolder</code>，而且从<code>mRecyclerPool</code>取出的<code>View</code>每次都要去走<code>Adapter#onBindViewHolder</code>去重新绑定数据。假如我现在需要在一个特定的位置(比如position&#x3D;0位置)一直展示某个<code>View</code>，且里面的内容是不变的，那么最好的情况就是在特定位置时，既不需要每次重新创建<code>View</code>，也不需要每次都去重新绑定数据，上面的几种缓存显然都是不适用的，这种情况该怎么办呢？可以通过自定义缓存<code>ViewCacheExtension</code>实现上述需求。</p>
@@ -162,7 +173,7 @@
 <li>ViewCacheExtension适用场景：<strong>ViewHolder位置固定、内容固定、数量有限时使用</strong></li>
 <li>ViewCacheExtension使用举例：<br>比如在<code>position = 0</code>时展示的是一个广告，位置不变，内容不变，来看看如何实现：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"> //DemoRvActivity.java:</span><br><span class="line"> public class DemoRvActivity extends AppCompatActivity &#123;</span><br><span class="line">   private RecyclerView recyclerView;</span><br><span class="line">   private DemoAdapter adapter;</span><br><span class="line"></span><br><span class="line">   @Override</span><br><span class="line">   protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">       super.onCreate(savedInstanceState);</span><br><span class="line">       setContentView(R.layout.activity_demo_rv);</span><br><span class="line">       recyclerView = findViewById(R.id.rv_view);</span><br><span class="line">       recyclerView.setLayoutManager(new LinearLayoutManager(this));</span><br><span class="line">       recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));</span><br><span class="line">       adapter = new DemoAdapter();</span><br><span class="line">       recyclerView.setAdapter(adapter);</span><br><span class="line"></span><br><span class="line">       //viewType类型为TYPE_SPECIAL时，设置四级缓存池RecyclerPool不存储对应类型的数据 因为需要开发者自行缓存</span><br><span class="line">       recyclerView.getRecycledViewPool().setMaxRecycledViews(DemoAdapter.TYPE_SPECIAL, 0);</span><br><span class="line">       //设置ViewCacheExtension缓存</span><br><span class="line">       recyclerView.setViewCacheExtension(new MyViewCacheExtension());</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   //实现自定义缓存ViewCacheExtension</span><br><span class="line">   class MyViewCacheExtension extends RecyclerView.ViewCacheExtension &#123;</span><br><span class="line">       @Nullable</span><br><span class="line">       @Override</span><br><span class="line">       public View getViewForPositionAndType(@NonNull RecyclerView.Recycler recycler, int position, int viewType) &#123;</span><br><span class="line">           //如果viewType为TYPE_SPECIAL,使用自己缓存的View去构建ViewHolder</span><br><span class="line">           // 否则返回null，会使用系统RecyclerPool缓存或者从新通过onCreateViewHolder构建View及ViewHolder</span><br><span class="line">           return viewType == DemoAdapter.TYPE_SPECIAL ? adapter.caches.get(position) : null;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 在看下Adapter的代码：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line">public class DemoAdapter extends RecyclerView.Adapter&lt;RecyclerView.ViewHolder&gt; &#123;</span><br><span class="line"></span><br><span class="line">    //viewType类型 TYPE_COMMON代表普通类型 TYPE_SPECIAL代表特殊类型(此处的View和数据一直不变)</span><br><span class="line">    public static final int TYPE_COMMON = 1;</span><br><span class="line">    public static final int TYPE_SPECIAL = 101;</span><br><span class="line"></span><br><span class="line">    public SparseArray&lt;View&gt; caches = new SparseArray&lt;&gt;();//开发者自行维护的缓存</span><br><span class="line"></span><br><span class="line">    private List&lt;String&gt; mDatas = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    DemoAdapter() &#123;</span><br><span class="line">        initData();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void initData() &#123;</span><br><span class="line">        for (int i = 0; i &lt; 50; i++) &#123;</span><br><span class="line">            if (i == 0) &#123;</span><br><span class="line">                mDatas.add(&quot;我是一条特殊的数据，我的位置固定、内容不会变&quot;);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                mDatas.add(&quot;这是第&quot; + (i + 1) + &quot;条数据&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public List&lt;String&gt; getData() &#123;</span><br><span class="line">        return mDatas;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @NonNull</span><br><span class="line">    @Override</span><br><span class="line">    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) &#123;</span><br><span class="line">        Log.e(&quot;TTT&quot;, &quot;-----onCreateViewHolder:&quot; + &quot;viewType is &quot; + viewType + &quot;-----&quot;);</span><br><span class="line">        Context context = viewGroup.getContext();</span><br><span class="line">        if (viewType == TYPE_SPECIAL) &#123;</span><br><span class="line">            View view = LayoutInflater.from(context)</span><br><span class="line">                    .inflate(R.layout.item_special_layout, viewGroup, false);</span><br><span class="line">            return new SpecialHolder(view);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            View view = LayoutInflater.from(context)</span><br><span class="line">                    .inflate(R.layout.item_common_layout, viewGroup, false);</span><br><span class="line">            return new CommonHolder(view);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) &#123;</span><br><span class="line">        Log.e(&quot;TTT&quot;, &quot;-----onBindViewHolder:&quot; + &quot;position is &quot; + position + &quot;-----&quot;);</span><br><span class="line">        if (holder instanceof SpecialHolder) &#123;</span><br><span class="line">            SpecialHolder sHolder = (SpecialHolder) holder;</span><br><span class="line">            sHolder.tv_ad.setText(mDatas.get(position));</span><br><span class="line">            //这里是重点，根据position将View放到自定义缓存中</span><br><span class="line">            caches.put(position, sHolder.itemView);</span><br><span class="line">        &#125; else if (holder instanceof CommonHolder) &#123;</span><br><span class="line">            CommonHolder cHolder = (CommonHolder) holder;</span><br><span class="line">            cHolder.tv_textName.setText(mDatas.get(position));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int getItemViewType(int position) &#123;</span><br><span class="line">        if (position == 0) &#123;</span><br><span class="line">            return TYPE_SPECIAL;//第一个位置View和数据固定</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return TYPE_COMMON;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public long getItemId(int position) &#123;</span><br><span class="line">        return super.getItemId(position);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int getItemCount() &#123;</span><br><span class="line">        return mDatas.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class SpecialHolder extends RecyclerView.ViewHolder &#123;</span><br><span class="line">        TextView tv_ad;</span><br><span class="line"></span><br><span class="line">        public SpecialHolder(@NonNull View itemView) &#123;</span><br><span class="line">            super(itemView);</span><br><span class="line">            tv_ad = itemView.findViewById(R.id.tv_special_ad);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class CommonHolder extends RecyclerView.ViewHolder &#123;</span><br><span class="line"></span><br><span class="line">        TextView tv_textName;</span><br><span class="line"></span><br><span class="line">        public CommonHolder(@NonNull View itemView) &#123;</span><br><span class="line">            super(itemView);</span><br><span class="line">            tv_textName = itemView.findViewById(R.id.tv_text);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-运行界面如下：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy81ODcxNjMtYWQ0MjVhOTljYTlmOTg5MC5wbmc?x-oss-process=image/format,png" alt="image.png"></li>
+运行界面如下：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy81ODcxNjMtYWQ0MjVhOTljYTlmOTg5MC5wbmc?x-oss-process=image/format,png" alt="image.png"></li>
 </ul>
 <p>重点关注第一条数据，当第一次运行时，在针对于第一条数据会执行<code>Adapter#onCreateViewHolder</code>和<code>Adapter#onBindViewHolder</code>，想想也对，毕竟第一次执行，肯定要有一个创建<code>View</code>和绑定数据的过程。此时向下滑动到底部再滑上来，通过debug发现不再走这两个方法了，而是在<code>getViewForPositionAndType</code>回调中根据<code>position</code>拿到了我们自定义缓存中的<code>View</code>及数据，所以可以直接展示。我们自行维护的缓存是什么时候设置的，其实这里是在<code>Adapter#onBindViewHolder</code>中根据<code>position</code>设置的缓存：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">caches.put(position, sHolder.itemView);</span><br></pre></td></tr></table></figure>
@@ -176,132 +187,193 @@
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>【1】<a target="_blank" rel="noopener" href="https://zhooker.github.io/2017/08/14/%E5%85%B3%E4%BA%8ERecyclerview%E7%9A%84%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6%E7%9A%84%E7%90%86%E8%A7%A3/">关于Recyclerview的缓存机制的理解</a><br>【2】<a target="_blank" rel="noopener" href="https://juejin.im/post/5c696ba9e51d457f136d24ff">RecyclerView缓存机制</a><br>【3】<a target="_blank" rel="noopener" href="https://android.jlelse.eu/anatomy-of-recyclerview-part-1-a-search-for-a-viewholder-continued-d81c631a2b91">ViewCacheExtension使用</a><br>【4】<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/CzrKotyupXbYY6EY2HP_dA">RecyclerView 必知必会</a></p>
 <p>【5】<a target="_blank" rel="noopener" href="https://juejin.im/post/5a7569676fb9a063435eaf4c">https://juejin.im/post/5a7569676fb9a063435eaf4c</a><br>【6】<a href="https://github.com/gyzboy/AndroidSamples/blob/master/app/src/main/java/com/gyz/androidsamples/view/ASRecyclerView.java">https://github.com/gyzboy/AndroidSamples/blob/master/app/src/main/java/com/gyz/androidsamples/view/ASRecyclerView.java</a><br>【7】<a target="_blank" rel="noopener" href="https://blog.csdn.net/HJsir/article/details/81485653">https://blog.csdn.net/HJsir/article/details/81485653</a><br>【8】<a target="_blank" rel="noopener" href="https://juejin.im/post/5b79a0b851882542b13d204b#heading-7">RecyclerView缓存原理，有图有真相</a></p>
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://github.com/crazyqiang/crazyqiang.github.io/2023/04/09/Android-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3RecyclerView%E7%9A%84%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6/" data-id="clg9mnr230004idohbpdtavq9" data-title="" class="article-share-link">分享</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2023/04/09/%E6%96%B0%E6%96%87%E7%AB%A0/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">前一篇</strong>
-      <div class="article-nav-title">
-        
-          新文章
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2023/04/08/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">后一篇</strong>
-      <div class="article-nav-title">Hello World</div>
-    </a>
-  
-</nav>
 
-  
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
 </article>
 
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a></li></ul>
-    </div>
-  </div>
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2023/04/09/%E6%96%B0%E6%96%87%E7%AB%A0/">新文章</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2023/04/08/hello-world/">Hello World</a></div></section></div>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">最新文章</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2023/04/10/1111/">1111</a>
-          </li>
-        
-          <li>
-            <a href="/2023/04/09/%E2%80%98%E6%96%B0%E6%96%87%E7%AB%A01%E2%80%99/">‘新文章1’</a>
-          </li>
-        
-          <li>
-            <a href="/2023/04/09/%E6%96%B0%E6%96%87%E7%AB%A0/">新文章</a>
-          </li>
-        
-          <li>
-            <a href="/2023/04/09/Android-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3RecyclerView%E7%9A%84%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2023/04/08/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
 
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
+
+
+
+
+
       
-      &copy; 2023 小马快跑<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@anonymity</a> 使用 <a href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
     </div>
   </div>
-</footer>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
 
-    </div>
-    <nav id="mobile-nav">
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = stellar.config.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+    root : '/',
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
   
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/main.js" async></script>
 
 
 
-  
-<script src="/fancybox/jquery.fancybox.min.js"></script>
+<!-- optional -->
 
 
 
-
-<script src="/js/script.js"></script>
-
-
-
+<!-- inject -->
 
 
   </div>
